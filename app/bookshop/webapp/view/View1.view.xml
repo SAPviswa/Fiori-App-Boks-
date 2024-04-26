@@ -6,16 +6,12 @@
     xmlns:layout="sap.ui.layout"
     xmlns:f="sap.f"
 >
-
-
     <f:DynamicPage
         id="idBooksListPage"
         headerExpanded="true"
     >
-	
         <f:title>
             <f:DynamicPageTitle id="idBooksListPageTitle">
-
                 <f:heading>
                     <Title
                         id="idBooksPageHeadingTitle"
@@ -73,9 +69,16 @@
                             id="idAuthorFilterLabel"
                             text="{i18n>ID}"
                         />
-                        <Input
+                        <!-- <Input
                             id="idIDFilterValue"
                             value=""
+                            placeholder="Enter ID"
+                        /> -->
+                        <MultiInput
+                            id="idIDFilterValue"
+                            showSuggestion="false"
+                            width="70%"
+                            showValueHelp="false"
                             placeholder="Enter ID"
                         />
                     </VBox>
@@ -85,7 +88,7 @@
                     >
                         <Label
                             id="idFTitleFilterLabel"
-                            text="{i18n>Title}"
+                            text="Title:"
                         />
                         <Input
                             id="idTitleFilterValue"
@@ -99,7 +102,7 @@
                     >
                         <Label
                             id="idStockFilterLabel"
-                            text="{i18n>Enter-Stock}"
+                            text="Enter Stock:"
                         />
                         <Input
                             id="idStockFilterValue"
@@ -113,7 +116,7 @@
                     >
                         <Label
                             id="idGenreFilterLabel"
-                            text="{i18n>Genre}"
+                            text="Genre:"
                         />
                         <Input
                             id="idGenreFilterValue"
@@ -131,7 +134,7 @@
                         />
                         <Button
                             id="idGoButtonValue"
-                            text="Go"
+                            text="Filter"
                             type="Emphasized"
                             press="onGoPress"
                         />
@@ -160,6 +163,7 @@
                 mode="SingleSelectMaster"
                 alternateRowColors="false"
                 items="{/Books}"
+                selectionChange="onSelectBooks"
             >
                 <headerToolbar>
                     <OverflowToolbar id="idBooksTableHeader">
@@ -173,6 +177,7 @@
                             icon="sap-icon://add"
                             tooltip="Create Book"
                             type="Success"
+                            press="onCreateButtonPress"
                         />
                         <Button
                             id="idBtnDelete"
@@ -215,7 +220,10 @@
                     </Column>
                 </columns>
                 <items>
-                    <ColumnListItem id="idBooksTableColListItem">
+                    <ColumnListItem
+                        id="idBooksTableColListItem"
+                        type="Navigation"
+                    >
                         <cells>
                             <Text
                                 id="idIDColValue"
