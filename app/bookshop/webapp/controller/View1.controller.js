@@ -2,12 +2,13 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/Token"
+    "sap/m/Token",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Filter, FilterOperator, Token) {
+    function (Controller, Filter, FilterOperator, Token, Fragment) {
         "use strict";
 
         return Controller.extend("com.app.bookshop.controller.View1", {
@@ -18,7 +19,7 @@ sap.ui.define([
                     const condition = true
                     if (condition) {
                         var text = args.text;
-                        return new Token({ key: text, text: text });
+                        return new Token({ key: text, text: text});
                     }
                 });
             },
@@ -66,7 +67,33 @@ sap.ui.define([
                 sGenreFilterLabel.setValue("");
 
                 oTable.getBinding("items").filter([]);
-            }
+            },
+            onSelectBooks: function (oEvent) {
+                
+                const { ID, author } = oEvent.getSource().getSelectedItem().getBindingContext().getObject();
+                const oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("RouteForm", {
+                    bookId: ID,
+                    authorName: author
+                })
+            },
+            onCreateButtonPress: async function () {
+                if (!this.oCreateBookDialog) {
+                    this.oCreateBookDialog = await Fragment.load({
+                        id: this.getView().getId(),
+                        name: "com.app.bookshop.fragments.CreateBooksDialog",
+                        controller: this
+                    });
+                    this.getView().addDependent(this.oCreateBookDialog);
+                }
 
+                this.oCreateBookDialog.open();
+            },
+
+            onCloseDialog: function(){
+                if(this.oCreateBookDialog.isOpen()){
+                    this.oCreateBookDialog.close()
+                }
+            }
         });
     });

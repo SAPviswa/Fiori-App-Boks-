@@ -69,7 +69,7 @@
         "sap.ui.generic.app": {},
         "sap.ui.table": {},
         "sap.ushell": {}
-      }
+        }
     },
     "contentDensities": {
       "compact": true,
@@ -113,9 +113,16 @@
       "routes": [
         {
           "name": "RouteView1",
-          "pattern": ":?query:",
+          "pattern": "",
           "target": [
             "TargetView1"
+          ]
+        },
+        {
+          "name": "RouteForm",
+          "pattern": "bookshop/{bookId}/:authorName:",
+          "target": [
+            "TargetForm"
           ]
         }
       ],
@@ -126,6 +133,12 @@
           "clearControlAggregation": false,
           "viewId": "View1",
           "viewName": "View1"
+        },
+        "TargetForm": {
+          "viewType": "XML",
+          "transition": "slide",
+          "viewId": "Form",
+          "viewName": "Form"
         }
       }
     },
@@ -134,7 +147,18 @@
       "type": "XML",
       "async": true,
       "id": "App"
-    }
+    },
+    "config": {
+			"sample": {
+				"stretch": true,
+				"files": [
+					"Form.view.xml",
+					"Form.controller.js",
+					"manifest.json"
+				]
+			}
+		}
+
   },
   "sap.cloud": {
     "public": true,
